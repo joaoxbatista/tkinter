@@ -3,7 +3,7 @@
 from Tkinter import *
 from Janela import *
 
-contas = ()
+contas = {}
 
 JPrincipal = MainWindow(contas)
 
