@@ -1,7 +1,7 @@
 #-*- coding:latin1 -*-
-#Author: Joao Batista Gomes Silva
+#Authors: Joao Batista Gomes Silva, Erick Oliveira de Souza
 #Github: jhonxbatista
-#E-mail: jhonxbatista@gmail.com
+#E-mails: jhonxbatista@gmail.com, erickdynsouza@hotmail.com
 
 from Tkinter import *
 import sys
