@@ -1,4 +1,8 @@
 #-*- coding:latin1 -*-
+#Authors: Joao Batista Gomes Silva, Erick Oliveira de Souza
+#Github: jhonxbatista
+#E-mails: jhonxbatista@gmail.com, erickdynsouza@hotmail.com
+
 class Conta:
 
 	def __init__(self, numero = None, saldo = None):
