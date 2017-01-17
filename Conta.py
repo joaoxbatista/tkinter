@@ -33,8 +33,9 @@ class Conta:
 			string += operacao+"\n" 
 
 		return string
-	def saldo(self):
-		print self.saldo
+	
+	def sald(self):
+		return "Seu saldo é: R$"+str(self.saldo)
 
 	def addHistorico(self, tipo, valor):
 		operacao = "-------------------------------------------\nOperação: "+str(tipo)+" Valor: "+str(valor)+"\n-------------------------------------------"

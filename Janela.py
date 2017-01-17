@@ -46,7 +46,7 @@ class MainWindow():
 		
 		#3.2 - Buttons
 		btn_create =  Button(self.window, text="Criar conta", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=self.conta)
-		btn_consult =  Button(self.window, text="Saldo", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0)
+		btn_consult =  Button(self.window, text="Saldo", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=self.saldo)
 		btn_saki =  Button(self.window, text="Saque", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=self.saque)
 		btn_deposit =  Button(self.window, text="Deposito", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=self.deposito)
 		btn_extract =  Button(self.window, text="Extrato", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=self.extrato)
@@ -55,8 +55,9 @@ class MainWindow():
 		#Draw
 		lb_title.grid(row=0, column=0)
 		btn_create.grid(row=1, column=0, pady=10)
+		btn_consult.grid(row=2, column= 0, pady=10)
 		btn_deposit.grid(row=3, column=0, pady=10)
-		btn_saki.grid(row=2, column=0, pady=10)
+		btn_saki.grid(row=4, column=0, pady=10)
 		
 		btn_extract.grid(row=4, column=0, pady=10)
 		btn_exit.grid(row=5, column=0, pady=10)
@@ -64,21 +65,35 @@ class MainWindow():
 		#Main Loop Window
 		self.window.mainloop()
 
-	#Métodos que realizam as funções
+	#Action Obter Saldo
+	def getSaldo(self, numero, mensagem):
+		status = 0
+		for numero_conta in self.contas:
+	 		if numero.get() == numero_conta:
+				
+	 			mensagem['text'] = self.contas[numero_conta].sald()
+	 			mensagem['bg'] = light_color
+	 			status = 1
+		
+		if status != 1:
+			mensagem['text'] = "Conta inexistente!"
+			mensagem['fg'] = light_color
+	 		mensagem['bg'] = danger_color
+		
+				
+	#Action Criar Conta
 	def criarConta(self, numero, mensagem):
 		try: 
-			# conta = Conta(numero.get(), 0)
-			# self.contas[numero.get()] = conta
-
 			for numero_conta in self.contas:
 				if numero.get() == numero_conta:
 					raise ValueError
 
-			conta = Conta(numero.get(), 100)
+			conta = Conta(numero.get(), 0)
 			self.contas[numero.get()] = conta
 
 			texto = "Cadastro Realizado com Sucesso!"
 			cor = success_color
+
 		except ValueError:
 			texto = "Conta já existente!"
 			cor = danger_color
@@ -86,9 +101,7 @@ class MainWindow():
 		mensagem['text'] = texto
 		mensagem['bg'] = cor
 		mensagem['fg'] = light_color
-		# for numero in self.contas:
-		# 	print self.contas[numero]
-	
+	#Action Depositar
 	def depositar(self, numero, valor, mensagem):
 		try: 
 			for numero_conta in self.contas:
@@ -111,6 +124,7 @@ class MainWindow():
 		# for numero in self.contas:
 		# 	print self.contas[numero]
 
+	#Action Sacar
 	def sacar(self, numero, valor, mensagem):
 		try: 
 			for numero_conta in self.contas:
@@ -131,6 +145,7 @@ class MainWindow():
 		# for numero in self.contas:
 		# 	print self.contas[numero]
 
+	#Action Gerar Extrato
 	def gerarExtrato(self, numero, mensagem):
 		try: 
 			for numero_conta in self.contas:
@@ -146,7 +161,9 @@ class MainWindow():
 		mensagem['text'] = texto
 		mensagem['bg'] = cor
 
-	#Métodos que Geram as Janela
+	#-----------------------------------------
+
+	#Janela Conta
 	def conta(self):
 
 		self.window = Tk()
@@ -190,6 +207,7 @@ class MainWindow():
 		#Main Loop Window
 		self.window.mainloop()
 
+	#Janela Saque
 	def saque(self):
 
 		self.window = Tk()
@@ -244,6 +262,7 @@ class MainWindow():
 		#Main Loop Window
 		self.window.mainloop()
 
+	#Janela Deposito
 	def deposito(self):
 
 		self.window = Tk()
@@ -254,9 +273,9 @@ class MainWindow():
 		self.height = 480
 		self.left = 150
 		self.top = 20
-
 		self.background = dark_color
 		self.color_label = light_color
+
 		#2 - Setting configuration
 		self.window.minsize(self.width, self.height)
 		self.window.maxsize(self.width, self.height)
@@ -294,6 +313,54 @@ class MainWindow():
 
 		btn_deposit.grid(row=6, column=0, pady=20)
 
+		#Main Loop Window
+		self.window.mainloop()
+
+	#Janela Saldo
+	def saldo(self):
+
+		self.window = Tk()
+		
+		#1 - Setting attributes of window
+		self.caption = "Banc System - Saldo"
+		self.width = 720
+		self.height = 480
+		self.left = 150
+		self.top = 20
+
+		self.background = dark_color
+		self.color_label = "#fff"
+
+		#2 - Setting configuration
+		self.window.minsize(self.width, self.height)
+		self.window.maxsize(self.width, self.height)
+		
+		self.window.title(self.caption)
+		self.window['bg'] = self.background
+		self.window.geometry(str(self.width)+"x"+str(self.height)+"+"+str(self.left)+"+"+str(self.top))
+
+		#3 - Setting Objects and Layout
+
+		#3.1 - Labels
+		lb_title = Label(self.window, text="Banc System - Saldo", bg=self.background, fg=self.color_label, font=("Helvetica", 16), pady=40, padx=220)
+		lb_ent_number = Label(self.window, text="Insira o numero da conta",fg=self.color_label, bg=self.background, font=("Helvetica", 12), pady=5)
+		lb_saldo = Label(self.window, text="Seu saldo aqui", fg=dark_color, bg=light_color)
+		
+		#3.2 - Entry
+		ent_number = Entry(self.window, width=30)
+		
+		#3.3 - Buttons
+		btn_consult = Button(self.window, text="Consultar", width=29, bg=primary_color, fg=light_color, height=2, highlightthickness=0,bd=0, command=lambda:self.getSaldo(ent_number, lb_saldo))
+		
+		#Draw
+		lb_title.grid(row=0, column=0)
+
+		lb_ent_number.grid(row=1, column=0)
+		ent_number.grid(row=2, column=0, ipady=5, ipadx=5, pady=10)
+		lb_saldo.grid(row=4, column=0, ipadx=85, ipady=12, pady=10)
+		btn_consult.grid(row=3, column=0, pady=10)
+
+		
 		#Main Loop Window
 		self.window.mainloop()
 
